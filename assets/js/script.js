@@ -33,7 +33,6 @@ var loadTasks = function() {
 
   // loop over object properties
   $.each(tasks, function(list, arr) {
-    console.log(list, arr);
     // then loop over sub-array
     arr.forEach(function(task) {
       createTask(task.text, task.date, list);
@@ -46,6 +45,87 @@ var saveTasks = function() {
 };
 
 
+// ****** change/update task
+$(".list-group").on("click", "p", function() {
+
+  var text = $(this)
+    .text()
+    .trim();
+  
+  var textInput = $("<textarea>")
+    .addClass("formControl")
+    .val(text);
+    
+  $(this).replaceWith(textInput);
+    textInput.trigger("focus");
+    
+});
+
+
+$(".list-group").on("blur", "textarea",function() {
+  var text = $(this)
+    .val()
+    .trim();
+
+  var status = $(this)
+    .closest(".list-group")
+    .attr("id")
+    .replace("list-", "");
+
+  var index = $(this)
+    .closest(".list-group-item")
+    .index();
+
+  tasks[status][index].text = text;
+  saveTasks();
+
+  var taskP = $("<p>")
+    .addClass("m-1")
+    .text(text);
+
+  $(this).replaceWith(taskP);
+});
+
+
+// ****** change/update date
+$(".list-group").on("click", "span", function() {
+  var date=$(this)
+    .text()
+    .trim();
+
+  var dateInput = $("<input>")
+    .attr("type", "text")
+    .addClass("form-control")
+    .val(date);
+
+  $(this).replaceWith(dateInput);
+
+  dateInput.trigger("focus");
+});
+
+$(".list-group").on("blur", "input[type='text']", function() {
+  var date = $(this)
+    .val()
+    .trim();
+
+  var status = $(this)
+    .closest(".list-group")
+    .attr("id")
+    .replace("list-", "");
+
+  var index = $(this)
+    .closest(".list-group-item")
+    .index();
+
+  tasks[status][index].date = date;
+  saveTasks();
+
+  var taskSpan = $("<span>")
+    .addClass("badge badge-primary-badge-pill")
+    .text(date);
+
+  $(this).replaceWith(taskSpan);
+});
 
 
 // modal was triggered
@@ -93,5 +173,3 @@ $("#remove-tasks").on("click", function() {
 
 // load tasks for the first time
 loadTasks();
-
-
