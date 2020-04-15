@@ -48,10 +48,29 @@ $(".list-group").on("click", "p", function() {
   var text = $(this)
     .text()
     .trim();
+  
   var textInput = $("<textarea>")
     .addClass("formControl")
     .val(text);
-} );
+    
+  $(this).replaceWith(textInput);
+    textInput.trigger("focus");
+    
+  $(".list-group").on("blur", "textarea",function() {
+    var text = $(this)
+      .val()
+      .trim();
+
+    var status = $(this)
+      .closest(".list-group")
+      .attr("id")
+      .replace("list-", "");
+
+    var index = $(this)
+    closest(".list-group-item")
+    .index();
+  });
+});
 
 
 
