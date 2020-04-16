@@ -121,7 +121,7 @@ $(".list-group").on("blur", "input[type='text']", function() {
   saveTasks();
 
   var taskSpan = $("<span>")
-    .addClass("badge badge-primary-badge-pill")
+   .addClass("badge badge-primary-badge-pill")
     .text(date);
 
   $(this).replaceWith(taskSpan);
